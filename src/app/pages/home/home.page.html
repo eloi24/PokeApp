@@ -1,0 +1,41 @@
+<ion-header >
+  <ion-toolbar>
+    <ion-img slot="start" class="logo" src="assets/pokeball.png" ></ion-img>
+    <ion-title slot="start" class="title">Pokédex</ion-title>
+    <ion-icon (click)="openModal(true)" class="filter" slot="end" name="filter-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list >
+    <ion-item (click)="goDetail(pokemon.url)" class="pokemon" *ngFor="let pokemon of pokemons">
+      <ion-img [id]="utils.getId(pokemon.url)" (ionError)="onImgError(utils.getId(pokemon.url))" slot="start" [src]="utils.getPokemonImgUrl(pokemon.url)"></ion-img>
+      <ion-label>{{pokemon.name | pokename}}</ion-label>
+    </ion-item>
+    
+  </ion-list>
+
+  <ion-infinite-scroll [disabled]="next==null" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content loadingText="Cargando..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Selecciona el tipo</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="openModal(false)"><ion-icon slot="start" name="close"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
+</ion-content>
