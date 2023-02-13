@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-img slot="start" class="logo" src="assets/pokeball.png" ></ion-img>
     <ion-title slot="start" class="title">Pokédex</ion-title>
-    <ion-icon (click)="openModal(true)" class="filter" slot="end" name="filter-outline"></ion-icon>
+    <ion-icon (click)="openModal(true);scrollToTop()" class="filter" slot="end" name="filter-outline"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
     
   </ion-list>
 
-  <ion-infinite-scroll [disabled]="next==null || pokemon_type" (ionInfinite)="loadMoreData($event)">
+  <ion-infinite-scroll [disabled]="next==null || pokemon_type || !pokemons" (ionInfinite)="loadMoreData($event)">
     <ion-infinite-scroll-content loadingText="Cargando..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
