@@ -77,7 +77,7 @@ export class HomePage {
   filterByType(){
     if(this.pokemon_type){
       this.api.getFilteredTypes(this.pokemon_type).subscribe((data)=>{
-        this.pokemons=[]
+        this.pokemons.length=0;
         var pokemons = [...data.pokemon];
         pokemons.forEach(element => {
           this.pokemons.push(element.pokemon)
