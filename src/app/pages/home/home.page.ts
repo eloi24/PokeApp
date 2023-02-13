@@ -17,6 +17,8 @@ export class HomePage {
   public prev: string = "";
   public isModalOpen = false;
   private img_src = environment.img_src;
+  public pokemon_type: string ="";
+  public types: Array<any> = [];
 
   constructor(
     private api: PokeapiService,
@@ -40,10 +42,15 @@ export class HomePage {
       this.prev = data.previous;
       this.pokemons = data.results
     })
+
+
+    this.api.getTypes().subscribe((data)=>{
+      this.types=data.results;
+    })
   }
 
   loadMoreData(ev: any) {
-    setTimeout(() => {
+    
       this.api.getPokemons(this.next).subscribe((data) => {
         this.next = data.next;
         this.prev = data.previous;
@@ -51,7 +58,7 @@ export class HomePage {
         ev.target.complete();
 
       })
-    })
+
 
 
   }
@@ -65,6 +72,20 @@ export class HomePage {
   onImgError(id: string){
     document.getElementById(id)?.setAttribute("src","assets/pokeball.png");
 
+  }
+
+  filterByType(){
+    if(this.pokemon_type){
+      this.api.getFilteredTypes(this.pokemon_type).subscribe((data)=>{
+        this.pokemons=[]
+        var pokemons = [...data.pokemon];
+        pokemons.forEach(element => {
+          this.pokemons.push(element.pokemon)
+        });
+    })
+    }else{
+      this.getData()
+    }
   }
 
 

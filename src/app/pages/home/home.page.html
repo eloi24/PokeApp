@@ -16,7 +16,7 @@
     
   </ion-list>
 
-  <ion-infinite-scroll [disabled]="next==null" (ionInfinite)="loadMoreData($event)">
+  <ion-infinite-scroll [disabled]="next==null || pokemon_type" (ionInfinite)="loadMoreData($event)">
     <ion-infinite-scroll-content loadingText="Cargando..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
@@ -28,11 +28,20 @@
         <ion-toolbar>
           <ion-title>Selecciona el tipo</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="openModal(false)"><ion-icon slot="start" name="close"></ion-icon></ion-button>
+            <ion-button (click)="openModal(false)"><ion-icon slot="end" name="close"></ion-icon></ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
+        <ion-list>
+          <ion-radio-group (ionChange)="filterByType()" [(ngModel)]="pokemon_type" [allowEmptySelection]="true">
+            <ion-item *ngFor="let type of types" >
+              <ion-label>{{type.name | pokename}}</ion-label>
+              <ion-radio mode="ios" slot="end" [value]="utils.getId(type.url)"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+
       </ion-content>
     </ng-template>
   </ion-modal>

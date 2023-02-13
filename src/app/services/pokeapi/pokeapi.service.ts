@@ -27,4 +27,12 @@ export class PokeapiService {
   getPokemonDetail(id:string){
     return this.http.get<any>(this.api_url+'pokemon/'+id);
   }
+
+  getTypes(){
+    return this.http.get<any>(this.api_url+'type')
+  }
+
+  getFilteredTypes(id: string){
+    return this.http.get<any>(this.api_url+'type/'+id)
+  }
 }
