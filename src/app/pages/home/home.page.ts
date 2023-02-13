@@ -1,7 +1,7 @@
 import { UtilsService } from './../../services/utils/utils.service';
 import { environment } from 'src/environments/environment';
-import { Component } from '@angular/core';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { Component, ViewChild } from '@angular/core';
+import { InfiniteScrollCustomEvent, IonContent } from '@ionic/angular';
 import { PokeapiService } from 'src/app/services/pokeapi/pokeapi.service';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+
+  @ViewChild(IonContent) content!: IonContent;
 
   public pokemons: Array<any> = [];
   public next: string = "";
@@ -81,11 +83,16 @@ export class HomePage {
         var pokemonsbytype = [...data.pokemon];
         pokemonsbytype.forEach(element => {
           this.pokemons.push(element.pokemon)
+          this.scrollToTop()
         });
     })
     }else{
       this.getData()
     }
+  }
+
+  scrollToTop() {
+    this.content.scrollToTop(500);
   }
 
 
